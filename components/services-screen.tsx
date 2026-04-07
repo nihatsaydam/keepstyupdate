@@ -160,11 +160,9 @@ export function ServicesScreen({
         </div>
       </div>
 
-      {/* Main Content - flex-1 to fill remaining space */}
-      <div className="flex-1 flex flex-col px-5 pt-3 pb-24">
-
-        {/* Quick Access - Curtain Toggle */}
-        <div className="mb-5 shrink-0">
+      {/* Quick Access - overlapping hero gradient */}
+      <div className="relative z-10 -mt-14 px-5">
+        <div className="mb-4">
           <button
             onClick={() => setQuickAccessOpen(!quickAccessOpen)}
             className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-hotel-teal/10 border border-hotel-teal/20 transition-all duration-300 active:scale-[0.98]"
