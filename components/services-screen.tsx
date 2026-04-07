@@ -13,6 +13,12 @@ import {
   ChevronRight,
   ChevronDown,
   Zap,
+  BellRing,
+  Coffee,
+  Flower2,
+  BriefcaseMedical,
+  Wind,
+  MessageCircle,
 } from "lucide-react"
 import { ServiceCard } from "./service-card"
 import { BottomNav } from "./bottom-nav"
@@ -26,46 +32,46 @@ interface ServicesScreenProps {
 
 const services = [
   {
-    icon: ConciergeBell,
+    icon: BellRing,
     label: "Concierge",
-    description: "Personal assistance & local tips",
+    description: "Personal assistance",
     color: "#9b795c",
-    bgColor: "#9b795c15",
+    bgColor: "#9b795c",
   },
   {
-    icon: UtensilsCrossed,
+    icon: Coffee,
     label: "Room Service",
-    description: "Food & beverages to your room",
+    description: "Food & beverages",
     color: "#d69f7e",
-    bgColor: "#d69f7e15",
+    bgColor: "#d69f7e",
   },
   {
-    icon: Sparkles,
+    icon: Flower2,
     label: "Spa & Wellness",
-    description: "Relax & rejuvenate your senses",
+    description: "Relax & rejuvenate",
     color: "#99d3d5",
-    bgColor: "#99d3d515",
+    bgColor: "#99d3d5",
   },
   {
-    icon: Luggage,
+    icon: BriefcaseMedical,
     label: "Bellboy",
-    description: "Luggage assistance anytime",
+    description: "Luggage assistance",
     color: "#607d8b",
-    bgColor: "#607d8b15",
+    bgColor: "#607d8b",
   },
   {
-    icon: SprayCan,
+    icon: Wind,
     label: "Housekeeping",
-    description: "Room cleaning & fresh linens",
+    description: "Cleaning & linens",
     color: "#7D8A2D",
-    bgColor: "#7D8A2D15",
+    bgColor: "#7D8A2D",
   },
   {
-    icon: Headphones,
+    icon: MessageCircle,
     label: "Support",
-    description: "24/7 guest assistance line",
+    description: "24/7 assistance",
     color: "#9b795c",
-    bgColor: "#9b795c15",
+    bgColor: "#9b795c",
   },
 ]
 
@@ -156,19 +162,10 @@ export function ServicesScreen({
           </div>
         </div>
 
-        {/* Hero Text */}
-        <div className="absolute bottom-8 left-5 right-5">
-          <h1 className="text-xl font-bold text-card leading-tight text-balance">
-            {"What would you like today?"}
-          </h1>
-          <p className="text-xs text-card/70 mt-1 font-medium">
-            Explore our premium services
-          </p>
-        </div>
       </div>
 
       {/* Main Content */}
-      <div className="px-5 pt-6 relative z-10">
+      <div className="px-5 pt-2.5 relative z-10">
 
         {/* Quick Access - Curtain Toggle */}
         <div className="mb-6">
@@ -235,42 +232,61 @@ export function ServicesScreen({
           </div>
         </div>
 
-        {/* Services Section Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-base font-bold text-foreground tracking-tight">
-            Our Services
-          </h3>
-          <button className="flex items-center gap-1 text-xs font-semibold text-hotel-brown">
-            View all
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        {/* Services Section */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base font-bold text-foreground tracking-tight">
+              Our Services
+            </h3>
+            <button className="flex items-center gap-1 text-xs font-semibold text-hotel-brown">
+              View all
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
-        {/* Services Grid - 2 columns, more spacious */}
-        <div className="grid grid-cols-2 gap-3">
-          {services.map((service) => (
-            <ServiceCard key={service.label} {...service} variant="default" />
-          ))}
-        </div>
-
-        {/* Other Requests */}
-        <div className="mt-5">
-          <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-hotel-slate/10">
-                <MoreHorizontal className="w-5 h-5 text-hotel-slate" />
-              </div>
-              <div className="text-left">
-                <h3 className="text-sm font-semibold text-foreground">
-                  Other Requests
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  {"Can't find what you need?"}
-                </p>
-              </div>
+          {/* Featured Service - Full Width */}
+          <button className="w-full flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-hotel-brown to-hotel-brown/80 shadow-md mb-3 text-left active:scale-[0.98] transition-transform">
+            <div className="w-14 h-14 rounded-2xl bg-card/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+              <BellRing className="w-7 h-7 text-card" strokeWidth={1.5} />
             </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+            <div className="flex-1 min-w-0">
+              <h4 className="text-sm font-bold text-card">Concierge</h4>
+              <p className="text-xs text-card/70 mt-0.5">Personal assistance & local recommendations</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-card/60 shrink-0" />
           </button>
+
+          {/* Services Grid - Remaining 5 services */}
+          <div className="grid grid-cols-3 gap-2.5">
+            {services.slice(1).map((service) => {
+              const Icon = service.icon
+              return (
+                <button
+                  key={service.label}
+                  className="group flex flex-col items-center gap-2 p-3.5 pb-3 rounded-2xl bg-card border border-border/40 shadow-sm hover:shadow-md text-center active:scale-[0.96] transition-all"
+                >
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                    style={{ backgroundColor: `${service.bgColor}12` }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: service.color }} strokeWidth={1.6} />
+                  </div>
+                  <span className="text-[11px] font-semibold text-foreground leading-tight">
+                    {service.label}
+                  </span>
+                </button>
+              )
+            })}
+            {/* Other Requests tile */}
+            <button className="group flex flex-col items-center gap-2 p-3.5 pb-3 rounded-2xl bg-card border border-border/40 border-dashed shadow-sm hover:shadow-md text-center active:scale-[0.96] transition-all">
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-hotel-slate/8 transition-transform duration-300 group-hover:scale-110">
+                <MoreHorizontal className="w-5 h-5 text-hotel-slate" strokeWidth={1.6} />
+              </div>
+              <span className="text-[11px] font-semibold text-muted-foreground leading-tight">
+                More
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
