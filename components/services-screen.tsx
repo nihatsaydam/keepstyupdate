@@ -11,8 +11,6 @@ import {
   MoreHorizontal,
   LogOut,
   ChevronRight,
-  Clock,
-  Star,
 } from "lucide-react"
 import { ServiceCard } from "./service-card"
 import { BottomNav } from "./bottom-nav"
@@ -69,12 +67,6 @@ const services = [
   },
 ]
 
-const quickActions = [
-  { label: "Extra Towels", icon: SprayCan },
-  { label: "Wake Up Call", icon: Clock },
-  { label: "Rate Stay", icon: Star },
-]
-
 export function ServicesScreen({
   guestName,
   roomNumber,
@@ -86,10 +78,10 @@ export function ServicesScreen({
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Header area */}
+      {/* Header area with hero */}
       <div className="relative">
         {/* Hero image */}
-        <div className="relative h-52 overflow-hidden">
+        <div className="relative h-64 overflow-hidden">
           <Image
             src="/images/hotel-hero.jpg"
             alt="Hotel lobby"
@@ -97,10 +89,10 @@ export function ServicesScreen({
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-background" />
         </div>
 
-        {/* Floating header */}
+        {/* Top bar */}
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-5 pt-12">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-card/50 shadow-md">
@@ -113,7 +105,7 @@ export function ServicesScreen({
               />
             </div>
             <div>
-              <p className="text-xs font-medium text-card/80">Good day,</p>
+              <p className="text-xs font-medium text-card/80">Welcome back,</p>
               <p className="text-sm font-bold text-card">{firstName}</p>
             </div>
           </div>
@@ -132,96 +124,134 @@ export function ServicesScreen({
             </button>
           </div>
         </div>
+
+        {/* Greeting overlay on hero bottom */}
+        <div className="absolute bottom-6 left-5 right-5">
+          <h1 className="text-xl font-bold text-card leading-tight text-balance">
+            {"What would you like today?"}
+          </h1>
+          <p className="text-xs text-card/70 mt-1 font-medium">
+            Explore our premium services
+          </p>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="px-5 -mt-6 relative z-10">
-        {/* Welcome card */}
-        <div className="rounded-2xl p-5 shadow-md border border-border/50" style={{ backgroundColor: '#99d3d5' }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-base font-bold" style={{ color: '#1a3a3b' }}>
-                How can we help you?
-              </h2>
-              <p className="text-xs mt-0.5" style={{ color: '#1a3a3b99' }}>
-                Explore our services below
-              </p>
-            </div>
-            <div className="w-12 h-12">
-              <Image
-                src="/images/mascot.png"
-                alt="Hotel mascot"
-                width={48}
-                height={48}
-                className="drop-shadow-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="mt-6">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-            Quick Actions
-          </h3>
-          <div className="flex gap-2">
-            {quickActions.map((action) => {
-              const Icon = action.icon
-              return (
-                <button
-                  key={action.label}
-                  className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-card border border-border/50 shadow-sm transition-all hover:shadow-md active:scale-95"
-                >
-                  <Icon className="w-3.5 h-3.5 text-hotel-teal" />
-                  <span className="text-xs font-medium text-foreground whitespace-nowrap">
-                    {action.label}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Services Grid */}
-        <div className="mt-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              Our Services
+      <div className="px-5 pt-5 relative z-10">
+        {/* Services Section */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-bold text-foreground tracking-tight">
+              Services
             </h3>
             <button className="flex items-center gap-1 text-xs font-medium text-hotel-brown">
-              View all
-              <ChevronRight className="w-3 h-3" />
+              See all
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            {services.map((service) => (
-              <ServiceCard key={service.label} {...service} />
+
+          {/* Featured row - 3 column */}
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            {services.slice(0, 3).map((service) => (
+              <ServiceCard key={service.label} {...service} variant="compact" />
+            ))}
+          </div>
+
+          {/* Second row - 3 column */}
+          <div className="grid grid-cols-3 gap-3">
+            {services.slice(3, 6).map((service) => (
+              <ServiceCard key={service.label} {...service} variant="compact" />
             ))}
           </div>
         </div>
 
-        {/* Other Requests */}
-        <div className="mt-4">
-          <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-hotel-slate/10">
-                <MoreHorizontal className="w-5 h-5 text-hotel-slate" />
-              </div>
-              <div className="text-left">
-                <h3 className="text-sm font-semibold text-foreground">
-                  Other Requests
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Can&apos;t find what you need?
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground" />
-          </button>
+        {/* Divider */}
+        <div className="my-5 h-px bg-border/60" />
+
+        {/* Quick Access Section */}
+        <div>
+          <h3 className="text-sm font-bold text-foreground tracking-tight mb-4">
+            Quick Access
+          </h3>
+
+          <div className="flex flex-col gap-2.5">
+            <QuickAccessRow
+              icon={SprayCan}
+              label="Request Extra Towels"
+              subtitle="Housekeeping will deliver shortly"
+              color="#7D8A2D"
+            />
+            <QuickAccessRow
+              icon={UtensilsCrossed}
+              label="Order Breakfast"
+              subtitle="In-room dining available 6AM - 11AM"
+              color="#d69f7e"
+            />
+            <QuickAccessRow
+              icon={Sparkles}
+              label="Book Spa Session"
+              subtitle="Same-day appointments available"
+              color="#99d3d5"
+            />
+          </div>
         </div>
+
+        {/* Divider */}
+        <div className="my-5 h-px bg-border/60" />
+
+        {/* Other Requests */}
+        <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all active:scale-[0.98]">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-hotel-slate/10">
+              <MoreHorizontal className="w-5 h-5 text-hotel-slate" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-sm font-semibold text-foreground">
+                Other Requests
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                {"Can't find what you need?"}
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        </button>
       </div>
 
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
+  )
+}
+
+/* Quick Access Row Component */
+function QuickAccessRow({
+  icon: Icon,
+  label,
+  subtitle,
+  color,
+}: {
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+  label: string
+  subtitle: string
+  color: string
+}) {
+  return (
+    <button className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all active:scale-[0.98] text-left">
+      <div
+        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+        style={{ backgroundColor: `${color}15` }}
+      >
+        <Icon className="w-4.5 h-4.5" style={{ color }} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <h4 className="text-sm font-semibold text-foreground leading-tight">
+          {label}
+        </h4>
+        <p className="text-xs text-muted-foreground mt-0.5 truncate">
+          {subtitle}
+        </p>
+      </div>
+      <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
+    </button>
   )
 }
