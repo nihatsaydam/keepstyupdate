@@ -2,25 +2,21 @@
 
 import Image from "next/image"
 import {
-  ConciergeBell,
-  UtensilsCrossed,
-  Sparkles,
-  Luggage,
-  SprayCan,
-  Headphones,
   MoreHorizontal,
   LogOut,
   ChevronRight,
   ChevronDown,
   Zap,
+  SprayCan,
+  UtensilsCrossed,
+  Sparkles,
   BellRing,
   Coffee,
   Flower2,
-  BriefcaseMedical,
+  Luggage,
   Wind,
   MessageCircle,
 } from "lucide-react"
-import { ServiceCard } from "./service-card"
 import { BottomNav } from "./bottom-nav"
 import { useState, useRef, useEffect } from "react"
 
@@ -34,44 +30,38 @@ const services = [
   {
     icon: BellRing,
     label: "Concierge",
-    description: "Personal assistance",
     color: "#9b795c",
-    bgColor: "#9b795c",
+    accent: "#f5eede",
   },
   {
     icon: Coffee,
     label: "Room Service",
-    description: "Food & beverages",
     color: "#d69f7e",
-    bgColor: "#d69f7e",
+    accent: "#fdf6ef",
   },
   {
     icon: Flower2,
-    label: "Spa & Wellness",
-    description: "Relax & rejuvenate",
+    label: "Spa",
     color: "#99d3d5",
-    bgColor: "#99d3d5",
+    accent: "#eef9f9",
   },
   {
-    icon: BriefcaseMedical,
+    icon: Luggage,
     label: "Bellboy",
-    description: "Luggage assistance",
     color: "#607d8b",
-    bgColor: "#607d8b",
+    accent: "#eef2f4",
   },
   {
     icon: Wind,
     label: "Housekeeping",
-    description: "Cleaning & linens",
     color: "#7D8A2D",
-    bgColor: "#7D8A2D",
+    accent: "#f4f5ec",
   },
   {
     icon: MessageCircle,
     label: "Support",
-    description: "24/7 assistance",
     color: "#9b795c",
-    bgColor: "#9b795c",
+    accent: "#f5eede",
   },
 ]
 
@@ -103,6 +93,7 @@ export function ServicesScreen({
 }: ServicesScreenProps) {
   const [activeTab, setActiveTab] = useState("services")
   const [quickAccessOpen, setQuickAccessOpen] = useState(false)
+  const [servicesVisible, setServicesVisible] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const [contentHeight, setContentHeight] = useState(0)
 
@@ -114,11 +105,17 @@ export function ServicesScreen({
     }
   }, [quickAccessOpen])
 
+  // Trigger staggered entrance animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setServicesVisible(true), 200)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Hero Section */}
-      <div className="relative">
-        <div className="relative h-60 overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Hero Section - slightly shorter */}
+      <div className="relative shrink-0">
+        <div className="relative h-52 overflow-hidden">
           <Image
             src="/images/hotel-hero.jpg"
             alt="Hotel lobby"
@@ -126,7 +123,7 @@ export function ServicesScreen({
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-background" />
         </div>
 
         {/* Top Bar */}
@@ -161,14 +158,13 @@ export function ServicesScreen({
             </button>
           </div>
         </div>
-
       </div>
 
-      {/* Main Content */}
-      <div className="px-5 pt-2.5 relative z-10">
+      {/* Main Content - flex-1 to fill remaining space */}
+      <div className="flex-1 flex flex-col px-5 pt-3 pb-24">
 
         {/* Quick Access - Curtain Toggle */}
-        <div className="mb-6">
+        <div className="mb-5 shrink-0">
           <button
             onClick={() => setQuickAccessOpen(!quickAccessOpen)}
             className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-hotel-teal/10 border border-hotel-teal/20 transition-all duration-300 active:scale-[0.98]"
@@ -232,8 +228,8 @@ export function ServicesScreen({
           </div>
         </div>
 
-        {/* Services Section */}
-        <div className="mb-4">
+        {/* Our Services Section */}
+        <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-foreground tracking-tight">
               Our Services
@@ -244,47 +240,75 @@ export function ServicesScreen({
             </button>
           </div>
 
-          {/* Featured Service - Full Width */}
-          <button className="w-full flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-hotel-brown to-hotel-brown/80 shadow-md mb-3 text-left active:scale-[0.98] transition-transform">
-            <div className="w-14 h-14 rounded-2xl bg-card/20 backdrop-blur-sm flex items-center justify-center shrink-0">
-              <BellRing className="w-7 h-7 text-card" strokeWidth={1.5} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-card">Concierge</h4>
-              <p className="text-xs text-card/70 mt-0.5">Personal assistance & local recommendations</p>
-            </div>
-            <ChevronRight className="w-5 h-5 text-card/60 shrink-0" />
-          </button>
-
-          {/* Services Grid - Remaining 5 services */}
-          <div className="grid grid-cols-3 gap-2.5">
-            {services.slice(1).map((service) => {
+          {/* Animated Services Grid - 2 columns */}
+          <div className="grid grid-cols-2 gap-3 flex-1">
+            {services.map((service, index) => {
               const Icon = service.icon
               return (
                 <button
                   key={service.label}
-                  className="group flex flex-col items-center gap-2 p-3.5 pb-3 rounded-2xl bg-card border border-border/40 shadow-sm hover:shadow-md text-center active:scale-[0.96] transition-all"
+                  className="service-tile-shimmer group relative flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border border-border/30 shadow-sm text-center active:scale-[0.95] overflow-hidden"
+                  style={{
+                    backgroundColor: service.accent,
+                    opacity: servicesVisible ? 1 : 0,
+                    transform: servicesVisible
+                      ? "translateY(0) scale(1)"
+                      : "translateY(24px) scale(0.92)",
+                    transitionProperty: "opacity, transform",
+                    transitionDuration: "0.6s",
+                    transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    transitionDelay: `${index * 80 + 100}ms`,
+                  }}
                 >
+                  {/* Decorative background circle */}
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                    style={{ backgroundColor: `${service.bgColor}12` }}
+                    className="absolute -top-6 -right-6 w-20 h-20 rounded-full opacity-[0.07] transition-transform duration-500 group-hover:scale-150"
+                    style={{ backgroundColor: service.color }}
+                  />
+
+                  {/* Icon container */}
+                  <div
+                    className="relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                    style={{ backgroundColor: `${service.color}18` }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: service.color }} strokeWidth={1.6} />
+                    <Icon
+                      className="w-6 h-6 transition-transform duration-300 group-hover:rotate-[-6deg]"
+                      style={{ color: service.color }}
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <span className="text-[11px] font-semibold text-foreground leading-tight">
+
+                  {/* Label */}
+                  <span className="relative text-xs font-bold text-foreground tracking-wide">
                     {service.label}
                   </span>
                 </button>
               )
             })}
-            {/* Other Requests tile */}
-            <button className="group flex flex-col items-center gap-2 p-3.5 pb-3 rounded-2xl bg-card border border-border/40 border-dashed shadow-sm hover:shadow-md text-center active:scale-[0.96] transition-all">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-hotel-slate/8 transition-transform duration-300 group-hover:scale-110">
-                <MoreHorizontal className="w-5 h-5 text-hotel-slate" strokeWidth={1.6} />
+
+            {/* More tile */}
+            <button
+              className="group relative flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border border-dashed border-border/50 bg-card shadow-sm text-center active:scale-[0.95] col-span-2"
+              style={{
+                opacity: servicesVisible ? 1 : 0,
+                transform: servicesVisible
+                  ? "translateY(0) scale(1)"
+                  : "translateY(24px) scale(0.92)",
+                transitionProperty: "opacity, transform",
+                transitionDuration: "0.6s",
+                transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                transitionDelay: `${services.length * 80 + 100}ms`,
+              }}
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-hotel-slate/8 transition-transform duration-300 group-hover:scale-110">
+                  <MoreHorizontal className="w-5 h-5 text-hotel-slate" strokeWidth={1.6} />
+                </div>
+                <span className="text-xs font-bold text-muted-foreground tracking-wide">
+                  Other Requests
+                </span>
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
               </div>
-              <span className="text-[11px] font-semibold text-muted-foreground leading-tight">
-                More
-              </span>
             </button>
           </div>
         </div>
