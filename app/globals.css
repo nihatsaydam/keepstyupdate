@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Hotel brand palette */
+  /* Primary: #99d3d5 (teal) */
+  /* Cream: #f5eede */
+  /* Brown: #9b795c */
+  /* Slate: #607d8b */
+  /* Peach: #d69f7e */
+
+  --background: #f5eede;
+  --foreground: #3a3028;
+  --card: #ffffff;
+  --card-foreground: #3a3028;
+  --popover: #ffffff;
+  --popover-foreground: #3a3028;
+  --primary: #99d3d5;
+  --primary-foreground: #1a3a3b;
+  --secondary: #f0e6d6;
+  --secondary-foreground: #5a4a3a;
+  --muted: #ede4d4;
+  --muted-foreground: #8a7a6a;
+  --accent: #9b795c;
+  --accent-foreground: #ffffff;
+  --destructive: #d44040;
+  --destructive-foreground: #ffffff;
+  --border: #e0d5c5;
+  --input: #e8dece;
+  --ring: #99d3d5;
+  --chart-1: #99d3d5;
+  --chart-2: #9b795c;
+  --chart-3: #607d8b;
+  --chart-4: #d69f7e;
+  --chart-5: #7D8A2D;
+  --radius: 0.875rem;
+  --sidebar: #f5eede;
+  --sidebar-foreground: #3a3028;
+  --sidebar-primary: #99d3d5;
+  --sidebar-primary-foreground: #1a3a3b;
+  --sidebar-accent: #ede4d4;
+  --sidebar-accent-foreground: #3a3028;
+  --sidebar-border: #e0d5c5;
+  --sidebar-ring: #99d3d5;
+
+  /* Custom brand tokens */
+  --hotel-teal: #99d3d5;
+  --hotel-cream: #f5eede;
+  --hotel-brown: #9b795c;
+  --hotel-slate: #607d8b;
+  --hotel-peach: #d69f7e;
+  --hotel-olive: #7D8A2D;
+}
+
+@theme inline {
+  --font-sans: 'DM Sans', 'DM Sans Fallback', sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-hotel-teal: var(--hotel-teal);
+  --color-hotel-cream: var(--hotel-cream);
+  --color-hotel-brown: var(--hotel-brown);
+  --color-hotel-slate: var(--hotel-slate);
+  --color-hotel-peach: var(--hotel-peach);
+  --color-hotel-olive: var(--hotel-olive);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Smooth transitions */
+.service-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.service-card:active {
+  transform: scale(0.96);
+}
+
+/* Bottom nav safe area */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
