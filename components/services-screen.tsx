@@ -227,88 +227,98 @@ export function ServicesScreen({
         </div>
 
         {/* Our Services Section */}
-        <div className="flex-1 flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-bold text-foreground tracking-tight">
-              Our Services
-            </h3>
-            <button className="flex items-center gap-1 text-xs font-semibold text-hotel-brown">
-              View all
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
+        <div className="flex-1 flex flex-col pb-6">
+          {/* Section Header */}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-5 rounded-full bg-hotel-brown" />
+              <h3 className="text-lg font-bold text-foreground tracking-tight">
+                Our Services
+              </h3>
+            </div>
+            <div className="flex-1 h-px bg-gradient-to-r from-border/60 to-transparent" />
           </div>
 
-          {/* Animated Services Grid - 2 columns */}
-          <div className="grid grid-cols-2 gap-3 flex-1">
+          {/* Services Grid */}
+          <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3">
             {services.map((service, index) => {
               const Icon = service.icon
               return (
                 <button
                   key={service.label}
-                  className="service-tile-shimmer group relative flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border border-border/30 shadow-sm text-center active:scale-[0.95] overflow-hidden"
+                  className="service-tile-shimmer group relative flex h-[188px] w-full flex-col items-center justify-center overflow-hidden rounded-[2rem] text-center shadow-sm transition-transform duration-200 active:scale-[0.96]"
                   style={{
-                    backgroundColor: service.accent,
                     opacity: servicesVisible ? 1 : 0,
                     transform: servicesVisible
                       ? "translateY(0) scale(1)"
-                      : "translateY(24px) scale(0.92)",
+                      : "translateY(16px) scale(0.95)",
                     transitionProperty: "opacity, transform",
-                    transitionDuration: "0.6s",
+                    transitionDuration: "0.5s",
                     transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-                    transitionDelay: `${index * 80 + 100}ms`,
+                    transitionDelay: `${index * 80 + 150}ms`,
                   }}
                 >
-                  {/* Decorative background circle */}
                   <div
-                    className="absolute -top-6 -right-6 w-20 h-20 rounded-full opacity-[0.07] transition-transform duration-500 group-hover:scale-150"
+                    className="absolute inset-0 transition-all duration-500 group-hover:scale-105"
+                    style={{
+                      background: `linear-gradient(145deg, ${service.accent} 0%, ${service.color}22 60%, ${service.color}44 100%)`,
+                    }}
+                  />
+                  <div
+                    className="absolute -top-10 -right-10 h-28 w-28 rounded-full opacity-[0.12] transition-transform duration-700 group-hover:scale-[1.6]"
                     style={{ backgroundColor: service.color }}
                   />
-
-                  {/* Icon container */}
                   <div
-                    className="relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                    style={{ backgroundColor: `${service.color}18` }}
-                  >
-                    <Icon
-                      className="w-6 h-6 transition-transform duration-300 group-hover:rotate-[-6deg]"
-                      style={{ color: service.color }}
-                      strokeWidth={1.5}
+                    className="absolute -bottom-5 -left-5 h-20 w-20 rounded-full opacity-[0.08]"
+                    style={{ backgroundColor: service.color }}
+                  />
+                  <div className="relative flex h-full flex-col items-center justify-center gap-4 p-5">
+                    <div
+                      className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
+                      style={{
+                        backgroundColor: `${service.color}20`,
+                        border: `1px solid ${service.color}25`,
+                      }}
+                    >
+                      <Icon
+                        className="h-8 w-8 transition-transform duration-300 group-hover:rotate-[-8deg]"
+                        style={{ color: service.color }}
+                        strokeWidth={1.5}
+                      />
+                    </div>
+                    <span className="text-[15px] font-bold text-foreground tracking-wide leading-tight">
+                      {service.label}
+                    </span>
+                    <div
+                      className="h-0.5 w-8 rounded-full opacity-60"
+                      style={{
+                        backgroundColor: service.color,
+                      }}
                     />
                   </div>
-
-                  {/* Label */}
-                  <span className="relative text-xs font-bold text-foreground tracking-wide">
-                    {service.label}
-                  </span>
                 </button>
               )
             })}
-
-            {/* More tile */}
-            <button
-              className="group relative flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border border-dashed border-border/50 bg-card shadow-sm text-center active:scale-[0.95] col-span-2"
-              style={{
-                opacity: servicesVisible ? 1 : 0,
-                transform: servicesVisible
-                  ? "translateY(0) scale(1)"
-                  : "translateY(24px) scale(0.92)",
-                transitionProperty: "opacity, transform",
-                transitionDuration: "0.6s",
-                transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-                transitionDelay: `${services.length * 80 + 100}ms`,
-              }}
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-hotel-slate/8 transition-transform duration-300 group-hover:scale-110">
-                  <MoreHorizontal className="w-5 h-5 text-hotel-slate" strokeWidth={1.6} />
-                </div>
-                <span className="text-xs font-bold text-muted-foreground tracking-wide">
-                  Other Requests
-                </span>
-                <ChevronRight className="w-4 h-4 text-muted-foreground" />
-              </div>
-            </button>
           </div>
+
+          {/* Other Requests Button */}
+          <button
+            className="group mt-3 w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl bg-gradient-to-r from-hotel-brown/[0.06] via-hotel-brown/[0.10] to-hotel-brown/[0.06] border border-hotel-brown/15 active:scale-[0.98] transition-all duration-200"
+            style={{
+              opacity: servicesVisible ? 1 : 0,
+              transform: servicesVisible ? "translateY(0)" : "translateY(12px)",
+              transitionProperty: "opacity, transform",
+              transitionDuration: "0.5s",
+              transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transitionDelay: `${(services.slice(3).length + 3) * 80 + 200}ms`,
+            }}
+          >
+            <MoreHorizontal className="w-4.5 h-4.5 text-hotel-brown/70" strokeWidth={1.8} />
+            <span className="text-xs font-bold text-hotel-brown/80 tracking-wide">
+              Other Requests
+            </span>
+            <ChevronRight className="w-3.5 h-3.5 text-hotel-brown/50 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </button>
         </div>
       </div>
 

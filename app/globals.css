@@ -116,6 +116,15 @@
   width: 0px;
 }
 
+/* Hide scrollbar utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Smooth transitions */
 .service-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
